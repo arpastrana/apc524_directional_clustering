@@ -236,6 +236,23 @@ We have \textbf{one month} to achieve alpha status, and about \textbf{two weeks}
     \item 08 Dec - Final submission (End of Week 6)
 \end{itemize}
 
+\section{Alpha Version}
+
+\begin{enumerate}
+    \item Writing and editing the API
+    \item An abstract base class clustering algorithm, with multiple algorithm objects that conform to
+a single API.
+    \item Original k-means algorithm refactored to comply with API set by ClusteringAlgorithm
+    \item Factory class that instantiates clustering methods on the fly. Only methods that inherit from the abstract base class are considered.
+    \item Setting a repository for the final report
+    \item Creating a VectorField class that conforms to our API
+    \item Implementing a BisectorField generator class
+    \item Wrapping an existing FEA library (in progress not in alpha) and creating a StructuralModel() that takes in loads, support conditions and a Mesh() and returns a sequence of valid userdefined VectorField() objects.
+    \item Refactoring alignvectors() and smoothenvectors() into their own functions into their own submodule that can be accessed as directionalclustering.transformations
+
+\end{enumerate}
+
+
 \section{Future Work}
 
 We outline a number of directions to extend to this project further. First, enlarging the proposed library of clustering algorithms would be of genuine interest. Secondly, and if time permits, we would like to explore the creation of our minimal FEA solver that handles the structural analysis of polygonal meshes. Lastly, we envision to eventually make this package an official plugin of the \href{http://www.compas.dev}{\textcolor{blue}{COMPAS}} framework.
