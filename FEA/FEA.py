@@ -3,7 +3,7 @@
 from sfepy import data_dir
 from sfepy.mechanics.matcoefs import stiffness_from_lame
 from sfepy.discrete.fem import Mesh, FEDomain, Field
-import numpy as nm
+import numpy as np
 from sfepy.discrete import (FieldVariable, Material, Integral, Function,Equation, Equations, Problem)
 from sfepy.terms import Term
 from sfepy.discrete.conditions import Conditions, EssentialBC
@@ -19,7 +19,7 @@ eps = 1e-8 * (max_x - min_x)
 omega = domain.create_region('Omega', 'all')
 gamma1 = domain.create_region('Gamma1','vertices in x < %.10f' % (min_x + eps),'facet')
 gamma2 = domain.create_region('Gamma2','vertices in x > %.10f' % (max_x - eps),'facet')
-field = Field.from_args('fu', nm.float64, 'vector', omega, approx_order=2)
+field = Field.from_args('fu', np.float64, 'vector', omega, approx_order=2)
 
 u = FieldVariable('u', 'unknown', field)
 v = FieldVariable('v', 'test', field, primary_var_name='u')
