@@ -1,0 +1,64 @@
+
+% This is where we describe the process to choose the Plotter package
+
+\subsection{Introduction}
+The main objective of this section is to implement a 3D viewer to replace the current 2D viewer. 
+
+\subsubsection{Objectives}
+\begin{itemize}
+    \item Implement a 3D viewer that allows us to add layers of geometry and compare multiple outputs
+    \item Open the possibility for an interactive viewer in the future
+    \item Open the possibility for web applications to visualize results
+\end{itemize}
+
+After looking into several options of packages we chose to use \href{https://plotly.com/python/}{\textcolor{blue}{Plotly.py}}. 
+
+\subsubsection{Reasons for selecting Plotly}
+\begin{itemize}
+    \item "The Plotly Python library is an interactive, open-source plotting library"
+    \item It is "Built on top of the Plotly JavaScript library (plotly.js)"
+    \item It also enables creation "of interactive web-based visualizations that can be displayed in Jupyter notebooks and saved to standalone HTML files"
+    \item It an be extended to serve "as part of pure Python-built web applications using Dash." This option includes animations and visualizations of multiple outputs with sliders.
+    
+Citations from \href{https://plotly.com/python/getting-started/}{\textcolor{blue}{Plotly.py - getting started}}.
+\end{itemize}
+
+\subsection{Learning how to use the package}
+
+The plots usually expect separate lists of $x$, $y$ and $z$ coordinates, and not a list of 3D points with $(x, y, z)$ coordinates, like the ones we are using with the COMPAS package. So the first job here was to separate the data according to what is expected for each plot. Helper functions were defined in a separate folder to do this job.
+
+\subsubsection{Graph objects}
+
+\begin{lstlisting}
+import plotly.graph_objects as go
+\end{lstlisting}
+
+This module allows for many types of plots, such as \emph{3D Meshes}, \emph{3D Scatter}, and vector fields as directed \emph{Cones}. 
+
+The visuals of the vector field viewer with directed cones is pleasing, and the impression is that the plot builds quickly. However, the current objective of the vector field visualization is not to see a preferred direction, but only the line in which it describes from the related face centroid.
+
+For that, we can use the 3D Scatter plots with the \emph{mode} set to \emph{lines}. And here comes the interesting part of the line visualization... It was not obvious at first how to display many lines in one plot. Plotly uses \emph{traces} as a list of each set of point to create line plots. The first reference found suggested building loops to create many different \emph{traces} and plot all of them as \emph{data} (a list of \emph{traces}). But that option takes an extremely long time with the extensive amount of lines we desire to plot, and it's simply not an option. After more rounds of exploration, the solution found is to build three empty lists (one for each coordinate) (\lstinline{np.empty(3 * number of lines})  and fill them  with the corresponding start and end coordinate for every first and second positions every 3 positions, like so:
+
+\begin{lstlisting}
+list_x = np.empty(3 * num_lines)
+list_x[::3] = start_x
+list_x[1::3] = end_x
+list_x[2::3] = None
+\end{lstlisting}
+The same is repeated for $y$ and $z$ coordinates.
+
+This way, we inform the plotter points to be connected are the points that have a number inside, and that no line will connect the end point of one line with the start point of the next because of the inserted separator.
+
+Another plotter explored in the package was 3d Mesh. One limitation is that the this plot doesn't have an option to display the mesh edges as lines - so we can't see the triangulation clearly. Another limitation is that it can only display triangulated meshes. For now, in this project, we are only working with triangulated meshes and this is not a problem. In the future, though, if we wish to display other polygonal meshes, then we may be forced into triangulating it for display. One possible solution is to display mesh edges to repeat the line process described above. Another solution found is to show the edges with the module described below.
+
+\subsubsection{Figure Factory}
+
+\begin{lstlisting}
+import plotly.figure_factory as ff
+\end{lstlisting}
+
+With this plotting option we can include the lists of coordinates of the mesh vertices and the corresponding indices that build each triangular face of the mesh - called simplices (again, only for triangulated meshes). The problem here is that the automatic color function setting uses $z$ coordinates to calculate color tone, and if your input has all $z$ coordinates lined up, then it throws an error that it can't calculate the distance between vertical points. The way to bypass this is to set another color function. In our case it was very simple, we just selected the color attribute of COMPAS mesh faces: \lstinline{color_func=list(face_colors.values())}. 
+In case this colorful view is not desired, then the option provided is to generate a list with the same length as mesh faces with one color repeatedly. 
+
+
+
