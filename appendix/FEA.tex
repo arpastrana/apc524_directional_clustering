@@ -1,0 +1,19 @@
+\subsection{FEA}
+
+The main objective of FEA, which is in the Finite branch, is to create a capability for directly adding geometry files and computing their principal stress fields, which will be fed down the pipeline.
+
+\subsection{Why is it not in the beta?}
+
+While we managed to develop a code that takes in a geometry file and computes the vectors, thus forgoing the use of karamba3d or another external agent, and keeping all work in Python, the process of getting a working FEA script took a lot of time and resulted in limited time available for the integration of the script in the driving code. The main reasons we failed in this regard are:
+
+\subsubsection{FEA package limitations}
+
+As much as FEA is a fantastic tool for a solving coupled partial differential equations, a package that includes solvers, visualizers, interpreters of different geometry files and user-defined boundary conditions, materials and methods comes with a lot of dependencies. Many packages that were tried (pycalculix, fempy) had outdated support, required to be run in earlier versions of Python or demonstrated bugs. After extensive research, SfePy proved to be the best package, however it is also limited. A number of dependent packages required lower versions of Python or simply would not install according to the instructions. Time constraints meant that not all options could be investigated. Upon further exploration its use could be extended in the script. Fortunately, in SfePy's case, the buggy packages were meant for optional features. 
+
+\subsubsection{Mesh generation}
+
+Additionally, FreeCAD and open3d were tried for generating meshes from user-specified geometry. FreeCAD's python module was buggy and required a lower version of Python, although its desktop application functioned perfectly. A non-extensive list of things tried to get FreeCAD to run. Downloading with Ubuntu, using terminal commands, changing the .dll in the bin file so that it will work with a higher Python and creating a domestic lower Python environment. However, the goal of this project was not to remove an external dependency and add another. Open3d demonstrated bugs in a number of mesh related functions that could not be resolved in time. 
+
+\subsection{FEA.py}
+
+The script loads all necessary sfepy packages and a mesh that is included in the Finite branch of the git repository. A solver is specified and the problem is defined as one of elasticity. The materials and boundary conditions are also specified and the stress field are generated.

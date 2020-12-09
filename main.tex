@@ -249,7 +249,7 @@ These are the classes described in our UML (in Figure \ref{fig:uml}):
 
 \subsection{Note on FEA}
 
-Two scripts can be found under FEA in the Finite branch of our code, which are under development. Due to time constraints, we were unable to integrate them in the driver code and they remain as scripts, not following the designed API. FEA.py takes a raw geometry file in the form of a .mesh, runs the finite-element method with the use of sfepy and outputs the u and v vectors of the mesh. The MeshCreator.py file uses the FreeCAD package to generate a mesh file out of a user specified geometry. As FEA packages usually go, both sfepy and FreeCAD have a number of dependencies that have to be met, (FreeCAD only works with Python 3.6) which made the installation process buggy and required significantly more time than originally estimated. The scripts serve as potential, workable extensions to our code, which, in the future, could allow a "from the ground up" approach, in which the clusters are received for any object specified by the user, without the use of external dependencies.  
+Two scripts can be found under FEA in the Finite branch of our code, which are under development. Due to time constraints, we were unable to integrate them in the driver code and they remain as scripts, not following the designed API. FEA.py takes a raw geometry file in the form of a .mesh, runs the finite-element method with the use of sfepy and outputs the u and v vectors of the mesh. As FEA packages usually go, both sfepy and FreeCAD have a number of dependencies that have to be met, (FreeCAD only works with Python 3.6) which made the installation process buggy and required significantly more time than originally estimated. The scripts serve as potential, workable extensions to our code, which, in the future, could allow a "from the ground up" approach, in which the clusters are received for any object specified by the user, without the use of external dependencies.  
 
 \begin{figure}[H]
     \centering
@@ -330,5 +330,8 @@ Lastly, we envision to eventually make this package an official plugin of the \h
 \label{appendix:a}
 \input{appendix/plotters}
 
+\section{FEA}
+\label{appendix:b}
+\input{appendix/FEA}
 
 \end{document}
