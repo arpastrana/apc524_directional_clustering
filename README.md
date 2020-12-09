@@ -72,6 +72,12 @@ python -c "import directional_clustering"
 If no errors occur, smile 🙂! You have a working installation of
 `directional_clustering`.
 
+For FEA.py:
+
+Set up a conda environment as above and follow the instructions here: https://sfepy.org/doc-devel/installation.html
+
+
+
 ## How to use this library?
 
 After installation completed, we are able to play around with this library to realize 
