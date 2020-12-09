@@ -1,4 +1,8 @@
 ##Importing all the packages
+##Working from the SfePy documentation
+##Cimrman, R., Lukeš, V., Rohan, E., 2019. Multiscale finite element calculations in Python using SfePy
+##Adv Comput Math. https://doi.org/10.1007/s10444-019-09666-0
+
 
 from sfepy import data_dir
 from sfepy.mechanics.matcoefs import stiffness_from_lame
@@ -12,6 +16,7 @@ from sfepy.solvers.ls import ScipyDirect
 from sfepy.solvers.nls import Newton
 from sfepy.postprocess.viewer import Viewer
 
+##Building the domain, and boundary conditions, as well as accepted error
 mesh = Mesh.from_file('C:/Users/16098/sfepy/meshes/2d/rectangle_tri.mesh')
 domain = FEDomain('domain', mesh)
 min_x, max_x = domain.get_mesh_bounding_box()[:, 0]
@@ -21,6 +26,7 @@ gamma1 = domain.create_region('Gamma1','vertices in x < %.10f' % (min_x + eps),'
 gamma2 = domain.create_region('Gamma2','vertices in x > %.10f' % (max_x - eps),'facet')
 field = Field.from_args('fu', np.float64, 'vector', omega, approx_order=2)
 
+##The u and v vector fields.
 u = FieldVariable('u', 'unknown', field)
 v = FieldVariable('v', 'test', field, primary_var_name='u')
 m = Material('m', D=stiffness_from_lame(dim=2, lam=1.0, mu=1.0))
@@ -36,9 +42,11 @@ def shift_u_fun(ts, coors, bc=None, problem=None, shift=0.0):
     val = shift * coors[:,1]**2
     return val
 
+##Boundary conditions
 bc_fun = Function('shift_u_fun', shift_u_fun,extra_args={'shift' : 0.01})
 shift_u = EssentialBC('shift_u', gamma2, {'u.0' : bc_fun})
 
+##Defining the problem as elasticity. For more problem types see SfePy documentation
 ls = ScipyDirect({})
 nls_status = IndexedStruct()
 nls = Newton({}, lin_solver=ls, status=nls_status)
@@ -48,11 +56,13 @@ pb.save_regions_as_groups('regions')
 pb.set_bcs(ebcs=Conditions([fix_u, shift_u]))
 pb.set_solver(nls)
 status = IndexedStruct()
+##Solving the problem
 vec = pb.solve(status=status)
 print('Nonlinear solver status:\n', nls_status)
 print('Stationary solver status:\n', status)
 pb.save_state('linear_elasticity.vtk', vec)
 
+#u field output
 u = vec()
 k = u.shape[0]/2
 u.shape = (int(k),2)
