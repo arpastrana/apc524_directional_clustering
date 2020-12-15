@@ -1,0 +1,6 @@
+*.aux
+*.log
+*.out
+
+# this rule might exclude image files for figures
+*.pdf
