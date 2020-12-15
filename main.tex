@@ -83,7 +83,7 @@
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.2]{images/pton .png}
+\includegraphics[scale=0.2]{images/pton.png}
 \end{figure}
 \vspace{30mm}
 \Large{Isabel Moreira, Hui Yuan, Alexandros Papamatthaiou, Rafael Pastrana}\\
@@ -273,7 +273,7 @@ In the review, we questioned names of variables, making sure they would be clear
 
 For the PR requests we relied mainly in one group member to review others' code, but we also took turns reviewing one round of a PR so we would all have this experience. 
 
-We used Sphinx to build the documentation, and Overleaf to collaboratively build this final report. We would like to point out that the PlyPlotter class is currently not included in the documentation, since we would need to adjust the automatic output to bypass the documentation of the inherited class, which follows different formatting style.
+We used Sphinx to build the documentation, and Overleaf to collaboratively build this final report. We would like to point out that the PlyPlotter class is currently included in the documentation with a different style, which was the way we found to skip the automatic documentation of the inherited class, which follows different formatting style.
 
 Additionally, the group members worked from different countries, all in different time zones, so meetings where all group members were present were scheduled in advance with the aid of online scheduling polls, such as \href{https://www.when2meet.com/}{\textcolor{blue}{When2Meet}} and \href{https://doodle.com/en/}{\textcolor{blue}{Doodle}}. Additional meetings with only two group members were scheduled on the side. For general communication, we used Campuswire group chats in the beginning, and later we migrated to WhatsApp. For specific code-related updates, we used Kanban boards on GitHub, updating each other with new comments in the related issue.
 
@@ -317,8 +317,7 @@ We outline a number of directions to extend to this project further. First, enla
 We are also leaving as future work to solve the data compatibility between the FEA solver and the expected mesh input to the clustering algorithms. 
 
 Additionally, with the newly incorporated plotter, we would like to extend the custom plots capabilities to many other types of visualization, including an extension to a web-based app where different types of plot can be seen and compared.
-Before extending the plotter, though, we would benefit from refactoring the current class to the Decorator design pattern. 
-We are also looking forward to complete any missing documentation and tests.
+Before extending the plotter, though, we would benefit from refactoring the current class to Decorator design pattern. 
 
 Lastly, we envision to eventually make this package an official plugin of the \href{http://www.compas.dev}{\textcolor{blue}{COMPAS}} framework.
 
