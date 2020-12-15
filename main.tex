@@ -264,7 +264,7 @@ Two scripts can be found under FEA in the Finite branch of our code, which are u
 
 We started working on the existing repository  \href{https://github.com/arpastrana/apc524_directional_clustering}{\textcolor{blue}{apc524\_directional\_clustering}}.
 
-We adopted Git workflow, with a centralized repository where all had writing access. We created a new repository from the one mentioned above only for the purposes of this course, and we all cloned it to local repositories. 
+We adopted Git workflow, with a centralized repository where all had writing access and a cloned version of it on our local machines. 
 
 We kept the $master$ branch intact during our development process - which was all concentrated in the $develop$ branch. Our individual workflow was based on the following description. Before editing anything, we branched out from $develop$ to branches we named after the features we were working on. For example, we had a $vector\_field$ branch where a group member would work on a new file dedicated to adding the related class and methods. We all knew which group member had each branch because we kept similar names to the issues created in the GitHub Kanban board, where we assigned ourselves the issues we would like to work on. 
 After the changes were made to the feature branch we made a pull request (PR) with a brief overview of major changes to the existing code and added or modified features and files. For each PR we had one round of review.
@@ -278,24 +278,24 @@ We used Sphinx to build the documentation, and Overleaf to collaboratively build
 Additionally, the group members worked from different countries, all in different time zones, so meetings where all group members were present were scheduled in advance with the aid of online scheduling polls, such as \href{https://www.when2meet.com/}{\textcolor{blue}{When2Meet}} and \href{https://doodle.com/en/}{\textcolor{blue}{Doodle}}. Additional meetings with only two group members were scheduled on the side. For general communication, we used Campuswire group chats in the beginning, and later we migrated to WhatsApp. For specific code-related updates, we used Kanban boards on GitHub, updating each other with new comments in the related issue.
 
 \subsection{Profiling}
-Before running the round of profiling we discussed where we expected the bottlenecks to occur. One hypothesis was that the smoothing algorithm might be taking too long to be completed because it used for-loops. The loops were used in order to make the functionality work, and it was a clear path to resolve the algorithm at the time. Another hypothesis we brought up was that the plot that generates multiple lines to visualize the vector field is also time consuming. A detailed description of ways to plot multiple lines and how to best approach this plot can be found in Appendix \ref{appendix:a}.
+Before running the round of profiling we discussed where we expected the bottlenecks to occur. One hypothesis was that the smoothing algorithm might be taking too long to be completed because it used for-loops. The loops were used in order to make the program work, and it was a clear path to resolve the algorithm at the time. Another hypothesis we brought up was that the plot that generates multiple lines to visualize the vector field is also time consuming. A detailed description of ways to plot multiple lines and how to best approach this plot can be found in Appendix \ref{appendix:a}.
 
 We had one round of profiling. The first notable result was that our driver code run for about 50-90 seconds for all attributes of the attribute matrix. Additionally, the ordering of the functions that take up the most cumulative time show no variation from attribute to attribute. The profiling software we used is cProfile, and sorted the list of 9000-9020 function calls to the top 20 of cumulative time spent. The total time taken by a function differs from the cumulative time as it includes all the time spent in sub-functions. The time per call is the total time spent in all calls over the number of calls.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.65]{Profiling.JPG}
-	\caption{Profiling: cumulative time}
-	\label{fig:uml}
+    \includegraphics[scale=0.63]{images/Profiling.JPG}
+	\caption{Profiling - cumulative time}
+	\label{fig:cumtime}
 \end{figure}
 
-The first two calls, in terms of cumulative time, are naturally built-in Python executable and the .py file. Afterward, the fire package, which generates the text and receives commands in the CLI. The total time profile may be more informative. The add face function and the get error vector functions from variational clustering seem to be the most obvious bottlenecks in our code. They include if and for loops that generally drive up the run time. At a lower total time, the align vectors function also drives up the run time. Apart from variational clustering, the compas geometry files are also costly. The profiling is done on the driving code, clustering.py. The plotters.py code demonstrates a total run time between 5-10 seconds, with the 10-20 in the top 20 in total time taking up less than 0.1s.
+The first two calls, in terms of cumulative time, are naturally built-in Python executable and the $.py$ file. Afterward, the fire package, which generates the text and receives commands in the CLI. The total time profile may be more informative. The \emph{add face} function and the \emph{get error} vector functions from variational clustering seem to be the most obvious bottlenecks in our code. These functions include if statements and for-loops that generally drive up the run time. At a lower total time, the \emph{align vectors} function also drives up the run time. Apart from variational clustering, the compas geometry files are also costly. The profiling is done on the driving code, \emph{clustering.py}. The \emph{plotters.py} code demonstrates a total run time between 5-10 seconds, with the 10-20 in the top 20 in total time taking up less than 0.1s.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.65]{Profiling2.JPG}
-	\caption{Profiling: total time}
-	\label{fig:uml}
+    \includegraphics[scale=0.7]{images/Profiling2.JPG}
+	\caption{Profiling - total time}
+	\label{fig:tottime}
 \end{figure}
 
 
