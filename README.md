@@ -4,4 +4,6 @@ Directional clustering of vector fields on meshes.
 
 ## Final Report
 
-Here go command-line instructions about how to build our final report into a pdf file.
+Please select your prefered latex command line argument for `main.tex`.
+
+e.g. `$ pdflatex main.tex`
