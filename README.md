@@ -6,6 +6,7 @@ Directional clustering of vector fields on meshes.
 
 This report was collaboratively written in Overleaf and linked to this repo.
 
-Please select your prefered latex command line argument to build this final report.
+Please make sure you have latex installed in your local machine and 
+run `$ pdflatex main.tex` command inside this folder to build the final report.
 
-e.g. `$ pdflatex main.tex`
+The final report will be in this folder with the name `main.pdf`.
